@@ -138,7 +138,7 @@ export default function ListaScreen() {
           onPress={() => router.push('/metas')}
         >
           <Text style={styles.metasButtonText}>
-            Minhas Metas — Aulas 14 e 15
+            Minhas Metas
           </Text>
         </Pressable>
 
