@@ -17,9 +17,11 @@ export default function ListaScreen() {
   // Recarrega os campeonatos quando a tela ganha foco
   useFocusEffect(
     useCallback(() => {
-      carregarCampeonatos().then(setCampeonatos).catch((erro) => {
-        console.error('Erro ao carregar campeonatos:', erro);
-      });
+      carregarCampeonatos()
+        .then(setCampeonatos)
+        .catch((erro) => {
+          console.error('Erro ao carregar campeonatos:', erro);
+        });
     }, [])
   );
 
@@ -130,6 +132,16 @@ export default function ListaScreen() {
           </Text>
         </Pressable>
 
+        {/* Acesso às Aulas 14 e 15 */}
+        <Pressable
+          style={styles.metasButton}
+          onPress={() => router.push('/metas')}
+        >
+          <Text style={styles.metasButtonText}>
+            Minhas Metas — Aulas 14 e 15
+          </Text>
+        </Pressable>
+
         <Pressable
           style={styles.addButton}
           onPress={() => router.push('/adicionar')}
@@ -150,7 +162,7 @@ const styles = StyleSheet.create({
   },
   listContent: {
     padding: 16,
-    paddingBottom: 160,
+    paddingBottom: 180,
     gap: 12,
   },
   emptyText: {
@@ -215,6 +227,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   debugButtonText: {
+    color: '#FFFFFF',
+    fontSize: 14,
+    fontWeight: '700',
+  },
+  metasButton: {
+    backgroundColor: '#7C3AED',
+    borderRadius: 12,
+    paddingVertical: 14,
+    alignItems: 'center',
+  },
+  metasButtonText: {
     color: '#FFFFFF',
     fontSize: 14,
     fontWeight: '700',
