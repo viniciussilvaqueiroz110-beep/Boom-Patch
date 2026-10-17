@@ -18,6 +18,7 @@ let databasePromise: Promise<SQLite.SQLiteDatabase> | null = null;
 async function inicializarBanco(): Promise<SQLite.SQLiteDatabase> {
   const db = await SQLite.openDatabaseAsync(DATABASE_NAME);
 
+  // Tabela dos campeonatos do Boom-Patch
   await db.execAsync(`
     CREATE TABLE IF NOT EXISTS campeonatos (
       id TEXT PRIMARY KEY NOT NULL,
@@ -32,10 +33,21 @@ async function inicializarBanco(): Promise<SQLite.SQLiteDatabase> {
     );
   `);
 
+  // Tabela exigida na Aula 14 e utilizada na Aula 15
+  await db.execAsync(`
+    CREATE TABLE IF NOT EXISTS metas (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      descricao TEXT NOT NULL,
+      status_feita INTEGER NOT NULL DEFAULT 0
+    );
+  `);
+
+  // Verifica se já existem campeonatos cadastrados
   const resultado = await db.getFirstAsync<{ total: number }>(
     'SELECT COUNT(*) AS total FROM campeonatos'
   );
 
+  // Migra os campeonatos antigos ou carrega os dados iniciais
   if (resultado?.total === 0) {
     const dadosAntigos = await AsyncStorage.getItem(STORAGE_KEY);
 
